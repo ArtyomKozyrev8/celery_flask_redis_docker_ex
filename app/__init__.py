@@ -1,8 +1,9 @@
-from flask import Flask, current_app
+from flask import Flask, current_app, jsonify
 from redis import Redis
 from settings import R_LOGIN, R_HOST, R_PSWD
-from random import randint
 from celery_app import add
+from random import randint
+from celery.result import AsyncResult
 
 
 def create_app():
@@ -33,8 +34,20 @@ def create_app():
 
     @app.route("/cel", methods=["GET"])
     def cel():
-        result = add.delay(23, 42)
-        c = result.wait()
-        return f"{c}"
+        temp1 = randint(1, 100)
+        temp2 = randint(1, 100)
+        result = add.delay(temp1, temp2)
+        return jsonify({"taskid": result.task_id, "args": [temp1, temp2]})
+
+    @app.route("/celres/<task_id>", methods=["GET"])
+    def celresult(task_id):
+        task = AsyncResult(task_id)
+        if task.ready():
+            if task.successful():
+                result = task.get()
+                return jsonify({"result": result, "error": False, "pending": False})
+            else:
+                return jsonify({"result": None, "error": True, "pending": False})
+        return jsonify({"result": None, "error": False, "pending": True})
 
     return app
