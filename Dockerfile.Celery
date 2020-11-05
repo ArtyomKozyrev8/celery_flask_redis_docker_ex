@@ -13,4 +13,10 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 COPY . .
 
+# Create a group and user
+RUN addgroup -S appgroup && adduser -S celery_user -G appgroup
+
+# Tell docker that all future commands should run as the appuser user
+USER celery_user
+
 CMD celery -A celery_app worker --loglevel=INFO --concurrency=10 -n my_worker
