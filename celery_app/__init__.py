@@ -1,4 +1,5 @@
 from celery import Celery
+import time
 
 from settings import R_LOGIN, R_PSWD, R_HOST
 
@@ -13,6 +14,8 @@ celery_app = Celery(
 
 @celery_app.task()
 def add(x, y):
-    return x + y
+    time.sleep(10)
+    r = {"x": x, "y": y, "res": x+y}
+    return r
 
 
