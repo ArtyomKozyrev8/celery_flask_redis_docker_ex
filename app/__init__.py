@@ -36,7 +36,7 @@ def create_app():
     def cel():
         temp1 = randint(1, 100)
         temp2 = randint(1, 100)
-        result = add.delay(temp1, temp2)
+        result = add.apply_async(temp1, temp2, expires=60)  # expire when message discards
         return jsonify({"taskid": result.task_id, "args": [temp1, temp2]})
 
     @app.route("/celres/<task_id>", methods=["GET"])
