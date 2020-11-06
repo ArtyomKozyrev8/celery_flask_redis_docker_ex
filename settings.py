@@ -1,3 +1,5 @@
-R_HOST = "test_redis"
-R_LOGIN = ""
-R_PSWD = ""
+REDIS_HOST = "test_redis"
+REDIS_LOGIN = ""
+REDIS_PSWD = ""
+
+RABBIT_HOST = "test_rabbit"
