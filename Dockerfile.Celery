@@ -19,4 +19,5 @@ RUN addgroup -S appgroup && adduser -S celery_user -G appgroup
 # Tell docker that all future commands should run as the appuser user
 USER celery_user
 
-CMD celery -A celery_app worker --loglevel=INFO --concurrency=8 -P prefork -n cel_app_worker
+# !! "-O fair" is a key component for simultaneous task execution by on worker !!
+CMD celery -A celery_app worker --loglevel=INFO --concurrency=8 -O fair -P prefork -n cel_app_worker
