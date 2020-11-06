@@ -16,7 +16,8 @@ def create_celery_app():
 
     _celery_app.conf.update(
         task_acks_late=True,  # good for long tasks
-        worker_prefetch_multiplier=1  # good for long tasks
+        worker_prefetch_multiplier=1,  # good for long tasks
+        result_expires=60  # 1 minutes
     )
     return _celery_app
 
