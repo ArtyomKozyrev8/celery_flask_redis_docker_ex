@@ -4,7 +4,7 @@ import time
 from settings import REDIS_LOGIN, REDIS_HOST, REDIS_PSWD, RABBIT_HOST
 
 backend_storage_url = f"redis://{REDIS_LOGIN}:{REDIS_PSWD}@{REDIS_HOST}:6379"
-broker_url = f"pyamqp://guest@{RABBIT_HOST}//"
+broker_url = f"amqp://guest@{RABBIT_HOST}:5672/"
 
 
 def create_celery_app():
