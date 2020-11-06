@@ -1,6 +1,6 @@
 from flask import Flask, current_app, jsonify
 from redis import Redis
-from settings import R_LOGIN, R_HOST, R_PSWD
+from settings import REDIS_LOGIN, REDIS_HOST, REDIS_PSWD, RABBIT_HOST
 from celery_app import add
 from random import randint
 from celery.result import AsyncResult
@@ -9,7 +9,7 @@ from celery.result import AsyncResult
 def create_app():
     app = Flask(__name__)
 
-    r_pool = Redis.from_url(f"redis://{R_LOGIN}:{R_PSWD}@{R_HOST}:6379")
+    r_pool = Redis.from_url(f"redis://{REDIS_LOGIN}:{REDIS_PSWD}@{REDIS_HOST}:6379")
 
     app.config.from_mapping(
         SECRET_KEY="dsfewfwerfgfrgra",
