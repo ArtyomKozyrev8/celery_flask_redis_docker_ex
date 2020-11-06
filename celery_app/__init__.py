@@ -25,7 +25,9 @@ def create_celery_app():
 celery_app = create_celery_app()
 
 
-@celery_app.task()
+# celery_app is the module name in the case is used to prevent  duplicated if several modules
+# though you can use anu or none value for name argument
+@celery_app.task(name="celery_app.add")
 def add(x, y):
     time.sleep(10)
     r = {"x": x, "y": y, "res": x+y}
