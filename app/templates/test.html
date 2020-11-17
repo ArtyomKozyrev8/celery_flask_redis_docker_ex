@@ -24,6 +24,7 @@
                 } else {
                     resultDiv.innerText = "waiting...";
                     console.log("inner waiting")
+                    setTimeout(getInnerResult, 1000, task_id, _innerResultNotReady)
                 }
             })
     }
@@ -36,10 +37,8 @@
             taskH1.innerText = String(task_id) + String(data["x"]);
             resultDiv.innerText = "waiting..."
             let innerResultNotReady = true;
-            while (innerResultNotReady) {
-                console.log("waiting for " + String(task_id));
-                setTimeout(getInnerResult, 1000, task_id, innerResultNotReady)
-            }
+            console.log("waiting for " + String(task_id));
+            getInnerResult(task_id, innerResultNotReady)
         })
 </script>
 </body>
