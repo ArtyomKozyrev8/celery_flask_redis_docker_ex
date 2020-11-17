@@ -19,9 +19,7 @@
             .then(innerData => {
                 let is_ready = innerData["pending"];
                 if (!is_ready) {
-                    console.log(innerData)
-                    resultDiv.innerText = innerData["result"];
-                    console.data(innerData["result"])
+                    resultDiv.innerText = innerData["result"]["result"];
                     _innerResultNotReady = false;
                 } else {
                     resultDiv.innerText = "waiting...";
