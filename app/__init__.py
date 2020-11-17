@@ -45,6 +45,7 @@ def create_app():
         if task.ready():
             if task.successful():
                 result = task.get()
+                result = result["result"]
                 return jsonify({"result": result, "error": False, "pending": False})
             else:
                 return jsonify({"result": None, "error": True, "pending": False})
