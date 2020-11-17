@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Test</title>
+</head>
+<body>
+    <h1 id="task"></h1>
+    <div id="result"></div>
+
+<script>
+    let taskH1 = document.getElementById("task");
+    let resultDiv = document.getElementById("result");
+    function getInnerResult(task_id, _innerResultNotReady) {
+        fetch(`/celres/${task_id}`)
+            .then(innerResponse => innerResponse.json())
+            .then(innerData => {
+                let is_ready = innerData["pending"];
+                if (!is_ready) {
+                    resultDiv.innerText = innerData["result"];
+                    _innerResultNotReady = false;
+                } else {
+                    resultDiv.innerText = "waiting...";
+                }
+            })
+    }
+
+    fetch("/get_task_id")
+        .then(response => response.json())
+        .then(data => {
+            let task_id = data["task_id"]
+            taskH1.innerText = String(task_id) + String(data["x"]);
+            resultDiv.innerText = "waiting..."
+            let innerResultNotReady = true;
+            while (innerResultNotReady) {
+                setTimeout(getInnerResult, 1000, task_id, innerResultNotReady)
+            }
+        })
+</script>
+</body>
+</html>
