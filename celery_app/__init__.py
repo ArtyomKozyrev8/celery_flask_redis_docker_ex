@@ -1,10 +1,12 @@
 from celery import Celery
 import time
+from datetime import datetime
 
 from settings import REDIS_LOGIN, REDIS_HOST, REDIS_PSWD, RABBIT_HOST
 
 backend_storage_url = f"redis://{REDIS_LOGIN}:{REDIS_PSWD}@{REDIS_HOST}:6379"
 broker_url = f"amqp://guest@{RABBIT_HOST}:5672/"
+
 
 
 def create_celery_app():
@@ -37,6 +39,6 @@ def add(x, y):
 @celery_app.task(name="celery_app.run_my_task")
 def run_my_task(x):
     time.sleep(10)
-    r = {"result": f"RESULT: {x}"}
+    r = {"result": f"RESULT: {x}", "datetime": datetime.now().strftime("%Y-%m-%d %H:%M:%S")}
     return r
 
