@@ -4,7 +4,6 @@ from settings import REDIS_LOGIN, REDIS_HOST, REDIS_PSWD, RABBIT_HOST
 from celery_app import add, run_my_task
 from random import randint
 from celery.result import AsyncResult
-import json
 import logging
 
 
@@ -47,7 +46,6 @@ def create_app():
         if task.ready():
             if task.successful():
                 result = task.get()
-                result = json.loads(result)
                 logging.error(result)
                 return jsonify({"result": result, "error": False, "pending": False})
             else:
