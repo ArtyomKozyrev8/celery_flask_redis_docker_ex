@@ -20,3 +20,9 @@ docker build -t serv .
 _Celery app:_
 
 docker build -f Dockerfile.Celery -t c_app .
+
+**HOW TO RUN REDIS AND RABBITMQ**
+
+docker run -d --name=test_rabbit --network=test_net rabbitmq
+
+docker run -d --name redis --network=test_net redis
