@@ -34,4 +34,9 @@ def add(x, y):
     return r
 
 
-# docker run -d --name=test_rabbit --network=test_net rabbitmq
+@celery_app.task(name="celery_app.run_my_task")
+def run_my_task(x):
+    time.sleep(10)
+    r = {"r": f"RESULT: {x}"}
+    return r
+
