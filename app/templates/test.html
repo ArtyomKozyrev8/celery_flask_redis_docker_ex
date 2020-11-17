@@ -5,6 +5,8 @@
     <title>Test</title>
 </head>
 <body>
+    <h1>TEST TEMPLATE:</h1>
+    <hr>
     <h1 id="task"></h1>
     <div id="result"></div>
 
@@ -21,6 +23,7 @@
                     _innerResultNotReady = false;
                 } else {
                     resultDiv.innerText = "waiting...";
+                    console.log("inner waiting")
                 }
             })
     }
@@ -29,10 +32,12 @@
         .then(response => response.json())
         .then(data => {
             let task_id = data["task_id"]
+            console.log(task_id)
             taskH1.innerText = String(task_id) + String(data["x"]);
             resultDiv.innerText = "waiting..."
             let innerResultNotReady = true;
             while (innerResultNotReady) {
+                console.log("waiting for " + String(task_id));
                 setTimeout(getInnerResult, 1000, task_id, innerResultNotReady)
             }
         })
